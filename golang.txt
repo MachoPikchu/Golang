@@ -1,0 +1,29 @@
+ tx := db.Begin()
+
+    defer func() {
+        if r := recover(); r != nil {
+            tx.Rollback()
+        }
+    }()
+
+    student := Student{Name: "John Doe", Email: "john.doe@example.com", DepartmentID: 1}
+    if err := tx.Create(&student).Error; err != nil {
+        tx.Rollback()
+        panic("failed to create student")
+    }
+
+    course := Course{Name: "Introduction to Golang", InstructorID: 1}
+    if err := tx.Create(&course).Error; err != nil {
+        tx.Rollback()
+        panic("failed to create course")
+    }
+
+    enrollment := Enrollment{StudentID: student.ID, CourseID: course.ID}
+    if err := tx.Create(&enrollment).Error; err != nil {
+        tx.Rollback()
+        panic("failed to enroll student in course")
+    }
+
+    if err := tx.Commit().Error; err != nil {
+        panic("failed to commit transaction")
+    }
