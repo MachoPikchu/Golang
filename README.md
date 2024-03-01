@@ -1,7 +1,7 @@
 # Golang
 Golang assignments
 
-in main.go file connection to db mysql with name order_service and port 3306
+in Main.go file connection to db mysql with name order_service and port 3306
 Also in main.go file made simple crud operations and structures was made using automigrate and Classes.go file with structures in it 
 
 Migrations made auto 
